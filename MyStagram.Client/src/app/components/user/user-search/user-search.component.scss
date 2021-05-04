@@ -1,0 +1,32 @@
+@import "~src/const.scss";
+
+.users-container {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 90vh !important;
+}
+
+.user-container {
+  border: solid 1px $primaryColor;
+  border-radius: 25px;
+  background-color: $primaryColor;
+  color: $secondaryColor;
+  font-size: 20px;
+}
+
+.avatar-container {
+  margin: 5px;
+  border: 2px solid grey;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+@media (max-width: 812px) {
+  .users-container {
+    overflow-y: auto;
+    max-height: 75vh !important;
+  }
+}

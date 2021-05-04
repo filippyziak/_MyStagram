@@ -1,0 +1,11 @@
+.posts-container{
+    overflow-y: auto;
+    height: 100vh;
+    z-index: 1;
+}
+
+@media(max-height: 812px){
+    .posts-container{
+        height: 85vh;
+    }
+}

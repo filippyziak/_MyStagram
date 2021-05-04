@@ -1,0 +1,12 @@
+<ng-container infiniteScroll [fromRoot]="true" [infiniteScrollContainer]="'.messenger'" [infiniteScrollDistance]="1"
+  [infiniteScrollThrottle]="0" (scrolled)="onScroll()">
+  <section class="messenger">
+    <ng-container *ngFor="let conversation of conversations">
+      <div class="message">
+        <app-conversation-card [conversation]="conversation"
+          [routerLink]="['/messenger/',conversation?.recipientId === currentUserId ?conversation?.senderId : conversation?.recipientId]">
+        </app-conversation-card>
+      </div>
+    </ng-container>
+  </section>
+</ng-container>

@@ -1,0 +1,19 @@
+<section class="conversation-section">
+  <div class="avatar-container" *ngIf="conversation?.avatarUrl" [ngStyle]="{
+      'background-image': 'url('+ conversation?.avatarUrl +')'
+      }">
+  </div>
+  <img class="avatar-container" *ngIf="!conversation?.avatarUrl" src="../assets/profile/user.png">
+  <div class="details-section">
+    <div class="userName">
+      <span> {{conversation?.userName.length > 10 ? (conversation?.userName | slice:0:10)+'...' : conversation?.userName}}</span>
+    </div>
+    <div class="last-message">
+      <span>
+        {{conversation?.senderId === this.currentUserId ? 'You:' : ''}} <span>
+          {{conversation?.lastMessage?.content.length > 15 ? (conversation?.lastMessage?.content | slice:0:15)+'...' : conversation?.lastMessage?.content}}
+        </span>
+      </span>
+    </div>
+  </div>
+</section>

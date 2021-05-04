@@ -1,0 +1,65 @@
+@import "~src/const.scss";
+
+.story-page {
+  height: 94vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  .photo-section {
+    z-index: 3;
+    position: fixed;
+    height: 70%;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0px 0px 0px 1px rgba(26, 30, 35, 0.3);
+    margin: 20px auto;
+    .photo-container {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      button {
+        margin: auto;
+      }
+      .details-section {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .upper-section {
+        }
+        .mid-section {
+          display: flex;
+          justify-content: space-between;
+          height: 100%;
+          a {
+            flex-direction: column;
+            display: flex;
+            justify-content: center;
+            color: $primaryColor;
+          }
+        }
+        .bottom-section {
+        }
+      }
+    }
+  }
+}
+
+button{
+  background-color: $primaryColor;
+  color: $secondaryColorWhiter;
+}
+
+.none-photo-container{
+  background-color: $primaryColor !important;
+}
+
+.button{
+ border: solid 1px $secondaryColorWhiter !important;
+}

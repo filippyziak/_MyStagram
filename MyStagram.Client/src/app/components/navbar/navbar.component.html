@@ -1,0 +1,35 @@
+<section class="navbar-section" *ngIf="isLoggedIn">
+  <div class="logo" [routerLink]="[' ']">
+    <img src="{{'../assets/design/logo-white-60.png'}}">
+  </div>
+  <ul class="navbar-right-side-icons">
+    <a [routerLink]="[' ']"> <i class="fas fa-home"></i></a>
+    <a [routerLink]="['search']"><i class="fas fa-search"></i></a>
+    <a [routerLink]="['notifications']">
+      <i class="fas fa-heart" matBadge="{{unwatchedFollowsCount}}" matBadgeColor="warn" matBadgeSize="small"
+        *ngIf="unwatchedFollowsCount > 0"></i>
+      <i *ngIf="unwatchedFollowsCount <= 0" class="fas fa-heart"></i></a>
+    <a [routerLink]="['messenger']">
+      <i class="fas fa-envelope" matBadge="{{unreadConvrsationsCount}}" matBadgeColor="warn" matBadgeSize="small"
+        *ngIf="unreadConvrsationsCount > 0"></i>
+      <i class="fas fa-envelope" *ngIf="unreadConvrsationsCount <= 0"></i></a>
+    <i mat-button [matMenuTriggerFor]="menu">
+      <div class="avatar-container" *ngIf="this.currentUser?.photoUrl" [ngStyle]="{
+        'background-image': 'url('+ this.currentUser?.photoUrl +')'
+        }">
+      </div>
+      <img class="avatar-container" *ngIf="!this.currentUser?.photoUrl" src="../assets/profile/user.png">
+    </i>
+
+    <mat-menu #menu="matMenu" xPosition="before" backdropClass="customize">
+      <button mat-menu-item [routerLink]="['post/create']" [queryParams]="{ createMode: true }"><i
+          class=" fas fa-clone"></i> Add Post </button>
+      <button mat-menu-item [routerLink]="['/profile/', this.currentUser?.id]"><i class="fas fa-user"></i>
+        My Profile </button>
+      <button mat-menu-item [routerLink]="['/account/edit']"><i class="fas fa-cog"></i> Settings </button>
+      <button mat-menu-item (click)="this.authService.logout()"><i class="fas fa-sign-out-alt"></i> Logout </button>
+    </mat-menu>
+
+
+  </ul>
+</section>

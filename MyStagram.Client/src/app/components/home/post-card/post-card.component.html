@@ -1,0 +1,60 @@
+<section class="post-card-section">
+  <section class="upper-section">
+    <div class="avatar-container" *ngIf="post?.userPhotoUrl" [ngStyle]="{
+        'background-image': 'url('+ post?.userPhotoUrl +')'
+      }">
+    </div>
+    <img class="avatar-container" *ngIf="!post?.userPhotoUrl" src="../assets/profile/user.png">
+    <div class="main-top">
+      <a class="username" (click)="goToUserProfile()"> {{post.userName}} </a>
+      <a class="menu-button" *ngIf="this.authService.currentUser.id===this.post.userId"><i [matMenuTriggerFor]="menu" class="fas fa-ellipsis-v"></i></a>
+      <a class="menu-button" *ngIf="this.authService.currentUser.id!==this.post.userId"><i class="fas fa-ellipsis-v"></i></a>
+    </div>
+  </section>
+  <section class="photo-section">
+    <div class="photo-container" [ngStyle]="{
+        'background-image': 'url('+ post?.photoUrl +')'
+      }"></div>
+  </section>
+  <section class="button-section">
+    <div class="button-section-left-side">
+      <a *ngIf="isLiked" class="liked-button" (click)="likePost()"> <i class="fas fa-heart"></i></a>
+      <a *ngIf="!isLiked" class="notLiked-button" (click)="likePost()"> <i class="fas fa-heart"></i></a>
+      <a (click)="displayComments()"> <i class="fas fa-comment"></i></a>
+      <a (click)="goToMessenger()"> <i class="fas fa-envelope"></i></a>
+    </div>
+    <div class="button-section-right-side">
+      <!-- <a> <i class="fas fa-angry"></i></a> -->
+    </div>
+  </section>
+  <section class="description-section">
+    <div class="description-area">
+      <strong (click)="goToUserProfile()" class="text-truncate">{{post.userName}}</strong><span>
+        {{post.description}}</span>
+    </div>
+  </section>
+  <section class="row col mx-1">
+    <form [formGroup]="commentForm" *ngIf="authService.isLoggedIn()">
+      <fieldset class="col-12">
+        <textarea class="custom-input form-control input-c" type="text" placeholder="comment..." style="overflow:hidden"
+          cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="15"
+          formControlName="content" required maxlength="{{constants.maximumCommentLength}}"></textarea>
+      </fieldset>
+    </form>
+    <div class="offset-10 col-2">
+      <button style="float:right" class="col-md-12" (click)="createComment()"
+        [disabled]="commentForm.invalid || commentForm.pristine">
+        <i class="fas fa-location-arrow"></i></button>
+    </div>
+  </section>
+</section>
+<app-comments *ngIf="areCommentsDisplayed" [postId]="post.id" [comments]="post.comments"
+  (commentsclosed)="closeComments()"></app-comments>
+<div class="blur" @blurToggle *ngIf="areCommentsDisplayed" (click)="closeComments()"></div>
+
+<mat-menu #menu="matMenu" xPosition="before" backdropClass="customize">
+  <button *ngIf="this.authService.currentUser.id===this.post.userId" mat-menu-item (click)="goToPostEdit()"><i
+      class="fas fa-edit"></i> Edit post </button>
+  <button *ngIf="this.authService.currentUser.id===this.post.userId" mat-menu-item class="mat-button"
+    (click)="deletePost()"><i class="fas fa-trash"></i> Delete post </button>
+</mat-menu>

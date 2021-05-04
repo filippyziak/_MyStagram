@@ -1,0 +1,33 @@
+<section class="story-page">
+  <section class="photo-section">
+    <div *ngIf="currentStory" class="photo-container" [ngStyle]="{
+      'background-image': 'url('+ currentStory?.storyUrl +')'
+    }">
+      <section class="details-section">
+        <section class="upper-section">
+          <span></span>
+          <button class="row col" *ngIf="myStory" (click)="deleteStory(currentStory.id)"><i class="fas fa-trash"></i></button>
+        </section>
+        <section class="mid-section">
+          <a (click)="changePhoto(direction.previous)"> <i class="fas fa-arrow-circle-left"></i></a>
+          <a (click)="changePhoto(direction.next)"> <i class="fas fa-arrow-circle-right"></i></a>
+        </section>
+        <section class="bottom-section">
+          <span></span>
+          <button class="row col" *ngIf="myStory" (click)="fileInput.click()">
+            <input #fileInput type="file" (change)="createStory(fileInput.files[0])"
+              accept=".img,.png,.jpg,.jpeg,.tiff,.ico,.svg" style="display: none;" /> <i class="fas fa-plus"></i>
+          </button>
+        </section>
+      </section>
+    </div>
+    <div class="photo-container none-photo-container" *ngIf="!currentStory && myStory===true">
+      <button class="button" type="button" (click)="fileInput.click()">
+        <input #fileInput type="file" (change)="createStory(fileInput.files[0])"
+          accept=".img,.png,.jpg,.jpeg,.tiff,.ico,.svg" style="display: none;" />Add your story now!
+      </button>
+    </div>
+  </section>
+</section>
+<div class=" blur" @blurToggle (click)="goToMain()">
+</div>

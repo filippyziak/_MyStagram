@@ -1,0 +1,36 @@
+<section class="users-wrapper">
+  <div class="search-container">
+    <section class="search-section">
+      <form [formGroup]="searchForm">
+        <div class="row my-2 offset-md-4 col-md-3 d-flex justify-content-center">
+          <fieldset class="form-group col-md-8 custom-fieldset">
+            <input class="form-control custom-input" placeholder="Search user..." formControlName="userName"
+              autocomplete="off" />
+          </fieldset>
+          <button class="col-md-2" (click)="searchUsers(false)">search</button>
+        </div>
+      </form>
+    </section>
+    <ng-container infiniteScroll [fromRoot]="true" [infiniteScrollContainer]="'.users-container'"
+      [infiniteScrollDistance]="1" [infiniteScrollThrottle]="0" (scrolled)="onScroll()">
+
+      <div class="users-container">
+        <ng-container *ngFor="let user of userProfiles">
+          
+            <div class="user-container offset-md-4 row col-md-3 mb-3" (click)="goToUserProfile(user.id)">
+              <div class="col-md-8 d-flex align-self-center mx-3">{{user.userName}}</div>
+              <div class="avatar-container col-md-2" *ngIf="user?.photoUrl" [ngStyle]="{
+                  'background-image': 'url('+ user?.photoUrl +')'
+                }">
+              </div>
+              <div class="avatar-container col-md-2" *ngIf="!user?.photoUrl" [ngStyle]="{
+                'background-image': 'url('+ '../assets/profile/user.png' +')'
+              }"></div>
+            </div>
+          
+        </ng-container>
+      </div>
+
+    </ng-container>
+  </div>
+</section>

@@ -1,0 +1,45 @@
+<div class="container my-5 py-5">
+  <div class="row col justify-content-center align-self-center">
+    <section class="row col-md-4 justify-content-center">
+      <div class="logo">
+        <img src="{{'../assets/design/logo-black-60.png'}}">
+      </div>
+      <form [formGroup]="registerForm">
+        <fieldset class="form-group my-2">
+          <input class="custom-input form-control" type="email" placeholder="email adress" required email
+            formControlName="email" />
+          <span class="text-danger" *ngIf="registerForm.get('email').dirty">{{
+            formHelper.getErrorMessage(registerForm, "email")  
+          }}</span>
+        </fieldset>
+        <fieldset class="form-group my-2">
+          <input class="custom-input form-control" placeholder="username" required
+            minLength="{{constants.minUserNameLength}}" maxlength="{{constants.maxUserNameLength}}"
+            formControlName="userName" />
+          <span class="text-danger" *ngIf="registerForm.get('userName').dirty">{{
+            formHelper.getErrorMessage(registerForm, "userName")  
+          }}</span>
+        </fieldset>
+        <fieldset class="form-group my-2">
+          <input class="custom-input form-control" type="password" placeholder="password" required
+            minLength="{{constants.minUserPasswordLength}}" maxLength="{{constants.maxUserPasswordLength}}"
+            formControlName="password" />
+          <span class="text-danger" *ngIf="registerForm.get('password').dirty">{{
+            formHelper.getErrorMessage(registerForm, "password")  
+          }}</span>
+        </fieldset>
+        <fieldset class="form-group my-2">
+          <input class="custom-input form-control" type="password" placeholder="confirm password"
+            maxLength="{{constants.maxUserPasswordLength}}" required formControlName="confirmPassword" />
+          <span class="text-danger" *ngIf="registerForm.get('confirmPassword').dirty">{{
+            formHelper.getErrorMessage(registerForm, "confirmPassword")  
+          }}</span>
+        </fieldset>
+        <button type="submit" class="col-8 offset-2" (click)="register()" [disabled]="registerForm.invalid">
+          Create account
+        </button>
+        <p class="col-12 text-center my-2 custom-p" [routerLink]="['/login']">Already a user? Sign In!</p>
+      </form>
+    </section>
+  </div>
+</div>

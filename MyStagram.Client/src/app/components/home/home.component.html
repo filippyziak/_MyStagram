@@ -1,0 +1,19 @@
+<section *ngIf="!loggedIn()">
+  <app-register></app-register>
+</section>
+<section *ngIf="loggedIn()">
+  <ng-container infiniteScroll [fromRoot]="true" [infiniteScrollContainer]="'.posts-container'"
+    [infiniteScrollDistance]="1" [infiniteScrollThrottle]="0" (scrolled)="onScroll()">
+    <section class="posts-container">
+      <app-stories [storyWrappers]="storyWrappers"></app-stories>
+      
+        <h1 *ngIf="posts?.length === 0" class="row col d-flex justify-content-center my-5">
+          No posts to show...
+        </h1>
+    
+      <ng-container *ngFor="let post of posts">
+        <app-post-card [post]="post"> </app-post-card>
+      </ng-container>
+    </section>
+  </ng-container>
+</section>

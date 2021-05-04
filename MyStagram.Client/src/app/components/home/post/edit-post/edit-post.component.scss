@@ -1,0 +1,18 @@
+.post-section {
+  margin: 0 auto;
+  .description-area {
+    .mat-input-element {
+      padding: 10px;
+      align-self: center;
+      height: 20px;
+    }
+  }
+}
+.photo-container {
+  background-size: cover;
+  background-position: center;
+  width: 600px;
+  height: 560px;
+  max-width: 90vw;
+  max-height: 70vh;
+}

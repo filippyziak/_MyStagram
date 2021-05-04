@@ -1,0 +1,62 @@
+@import "~src/const.scss";
+.messages-thread {
+  height: 94vh;
+  margin-top: 1px;
+  .upper-section {
+    height: 5%;
+    min-height: 50px;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 0 5px;
+    border: solid 1px $primaryColor;
+    border-radius: 1em;
+    .avatar-position {
+      align-self: center;
+      cursor: pointer;
+      .avatar-container {
+        background-size: cover;
+        background-position: center;
+        border-radius: 50%;
+        border: 1px solid #c5c5c5;
+        width: 40px;
+        height: 40px;
+        align-self: center;
+      }
+    }
+    .userName {
+      cursor: pointer;
+      align-self: center;
+      margin: 0 5px;
+      font-size: 16px;
+    }
+  }
+  .messages-section {
+    height: 87%;
+    max-width: 600px;
+    margin: 0 auto;
+    word-wrap: break-word;
+    overflow-y: auto;
+  }
+  .send-message-section {
+    max-width: 600px;
+    margin: 0 auto;
+    .message-area {
+      width: 100%;
+      font-size: 18px;
+      justify-content: center;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+    }
+  }
+}
+
+@media (max-width: 812px) {
+  .messages-thread {
+    max-height: 80vh !important;
+  }
+}

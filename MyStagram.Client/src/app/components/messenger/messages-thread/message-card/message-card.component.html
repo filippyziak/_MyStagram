@@ -1,0 +1,15 @@
+<section class="message-card">
+
+  <div class="message-left" *ngIf="currentUserId !== message.senderId">
+    <div class="message">
+      <span>{{message.content}}</span>
+      <p class="timer"><span>{{message.dateCreated | timeAgo}}</span></p>
+    </div>
+  </div>
+  <div class="message-right" *ngIf="currentUserId === message.senderId">
+    <div class="message">
+      <span>{{message.content}}</span>
+      <p class="timer"><span>{{message.dateCreated | timeAgo}}</span></p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,12 @@
+.messenger {
+  max-width: 250px;
+  max-height: 500px;
+  padding: 5px;
+  overflow-y: auto;
+  margin: 5px auto 0 auto;
+  
+}
+.message:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}

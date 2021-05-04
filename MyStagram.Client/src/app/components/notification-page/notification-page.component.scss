@@ -1,0 +1,27 @@
+@import "~src/const.scss";
+
+.notification-page {
+  overflow-y: auto;
+  max-height: 85vh;
+}
+.notification {
+  background-color: $primaryColor;
+  color: $secondaryColor;
+  border-radius: 10px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+button {
+  border: solid 1px $secondaryColorWhiter !important;
+}
+.accept {
+  background-color: $greenColor !important;
+}
+.decline {
+  background-color: $destructiveColor !important;
+}
+
+span:focus{
+  outline: none;
+}

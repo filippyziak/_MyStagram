@@ -1,0 +1,35 @@
+<section class="messages-thread">
+  <section class="upper-section">
+    <div class="avatar-position" (click)="goToUserProfile()">
+      <div class="avatar-container" *ngIf="recipient?.photoUrl" [ngStyle]="{
+      'background-image': 'url('+ recipient?.photoUrl +')'
+      }">
+      </div>
+      <img class="avatar-container" *ngIf="!recipient?.photoUrl" src="../assets/profile/user.png">
+    </div>
+    <span class="userName" (click)="goToUserProfile()">{{recipient.userName}}</span>
+  </section>
+
+  <ng-container *ngIf="messages?.length !==0" infiniteScroll [fromRoot]="true"
+    [infiniteScrollContainer]="'.messages-section'" [infiniteScrollUpDistance]="1" [infiniteScrollThrottle]="0"
+    (scrolledUp)="onScroll()">
+    <section class="messages-section" #chatSection *ngIf="messages?.length >0">
+      <ng-container *ngFor="let message of messages">
+        <app-message-card [message]="message"></app-message-card>
+      </ng-container>
+    </section>
+  </ng-container>
+  <h2 *ngIf="messages?.length===0" class="row col d-flex justify-content-center my-3">No message found...</h2>
+  <section class="send-message-section my-2">
+    <form class="row col mx-1" [formGroup]="messageForm">
+      <fieldset class="col-11">
+        <input class="custom-input form-control" type="text" formControlName="content" required
+          maxLength="{{ constants.maximumCommentLength }}">
+      </fieldset>
+      <button style="float:right" class="col-1" (click)="sendMessage()"
+        [disabled]="messageForm.invalid || messageForm.pristine">
+        <i class="fas fa-location-arrow"></i></button>
+    </form>
+  </section>
+</section>
+

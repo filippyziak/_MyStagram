@@ -1,0 +1,26 @@
+<div class="container">
+  <h1 class="text-center my-4"> Notifications!</h1>
+  <ng-container infiniteScroll [fromRoot]="true" [infiniteScrollContainer]="'.notification-page'"
+    [infiniteScrollDistance]="1" [infiniteScrollThrottle]="0" (scrolled)="onScroll()">
+    <section class="row col-md-4 offset-md-4 justify-content-center notification-page">
+      <ng-container *ngFor="let follower of currentFollowers">
+        <div class="text-center my-2 p-2 notification" *ngIf="!follower.recipientAccepted">
+          <span class="mx-1" [routerLink]="['/profile/', follower?.senderId]">
+            {{follower?.senderName.length > 8 ? (follower?.senderName | slice:0:8)+'...' : follower?.senderName}}
+            wants to follow you:
+          </span>
+          <button class="mx-1 col-md-2 accept" (click)="acceptFollower(true, follower.senderId, $event)"><i
+              class="fas fa-check"></i></button>
+          <button class="mx-1 col-md-2 decline" (click)="acceptFollower(false, follower.senderId, $event)"><i
+              class="fas fa-times"></i></button>
+        </div>
+        <div class="text-center my-2 p-3 notification" *ngIf="follower.recipientAccepted">
+          <span class="mx-1" [routerLink]="['/profile/', follower?.senderId]">
+            {{follower?.senderName.length > 10 ? (follower?.senderName | slice:0:10)+'...' : follower?.senderName}}
+            followed you!
+          </span>
+        </div>
+      </ng-container>
+    </section>
+  </ng-container>
+</div>

@@ -1,0 +1,73 @@
+<section class="container my-4">
+  <div class="row col-md-10 offset-md-2">
+    <div class="avatar-container col-md-2" *ngIf="currentUser?.photoUrl" [ngStyle]="{
+      'background-image': 'url('+ currentUser?.photoUrl +')'
+    }">
+    </div>
+    <div class="avatar-container col-md-2" *ngIf="!currentUser?.photoUrl" [ngStyle]="{
+    'background-image': 'url('+ '../assets/profile/user.png' +')'
+  }"></div>
+    <form class="col-md-6 align-self-center offset-md-1" [formGroup]="userDataForm">
+      <fieldset class="custom-fieldset my-2 col row">
+        <input class="custom-input form-control" type="email" placeholder="new email address" required email
+          formControlName="Email">
+        <span class="text-danger" *ngIf="userDataForm.get('Email').dirty">{{
+        formHelper.getErrorMessage(userDataForm, "Email")
+      }}</span>
+      </fieldset>
+      <fieldset class="custom-fieldset my-2 col row">
+        <input class="custom-input form-control" placeholder="new username" required
+          minLength="{{ constants.minUserNameLength }}" maxLength="{{ constants.maxUserNameLength }}"
+          formControlName="UserName" />
+        <span class="text-danger" *ngIf="userDataForm.get('UserName').dirty">{{
+      formHelper.getErrorMessage(userDataForm, "UserName")
+      }}</span>
+      </fieldset>
+      <div class="row col-md-8 offset-md-2">
+
+        <mat-checkbox class="col-md-4" (change)="checkboxChanged($event)" [checked]="this.isPrivate"
+          labelPosition="before">
+          privacy
+        </mat-checkbox>
+        <button class="secondary-button col-md-8" (click)="updateProfile()"
+          [disabled]="this.isPrivate === this.currentUser.isPrivate && (userDataForm.invalid || userDataForm.pristine)">
+          save user data
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-md-2 offset-md-2 row my-2">
+
+    <button class="primary-button col-md-10 my-1" (click)="fileInput.click()">
+      <input #fileInput type="file" (change)="loadAvatar(fileInput.files[0])"
+        accept=".img,.png,.jpg,.jpeg,.tiff,.ico,.svg" style="display: none;" />set avatar
+    </button>
+    <button class="destructive-button col-md-10 my-1" (click)="deleteAvatar()" [disabled]="!currentUser?.photoUrl">
+      delete avatar
+    </button>
+  </div>
+
+  <div class="col-md-4 offset-md-2">
+    <form class="change-password-form" [formGroup]="changePasswordForm">
+      <fieldset class="custom-fieldset my-2">
+        <input class="custom-input form-control" type="password" placeholder="old password" required
+          formControlName="oldPassword" />
+        <span class="text-danger" *ngIf="changePasswordForm.get('oldPassword').dirty">{{
+          formHelper.getErrorMessage(changePasswordForm, "oldPassword")
+        }}</span>
+      </fieldset>
+      <fieldset class="custom-fieldset my-2">
+        <input class="custom-input form-control" type="password" placeholder="new password" required
+          minLength="{{constants.minUserPasswordLength}}" maxLength="{{constants.maxUserPasswordLength}}"
+          formControlName="newPassword" />
+        <span class="text-danger" *ngIf="changePasswordForm.get('newPassword').dirty">{{
+          formHelper.getErrorMessage(changePasswordForm, "newPassword")
+        }}</span>
+      </fieldset>
+      <button class="secondary-button col-md-6 offset-3" (click)="changePassword()"
+        [disabled]="changePasswordForm.invalid || changePasswordForm.pristine">Change password</button>
+    </form>
+  </div>
+
+</section>

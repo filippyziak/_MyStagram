@@ -1,0 +1,177 @@
+@import "~src/const.scss";
+
+.post-card-section {
+  width: 80%;
+  height: 800px;
+  max-height: 900px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  margin-top: 1%;
+  box-shadow: 0px 0px 0px 1px rgba(26, 30, 35, 0.3);
+  z-index: 1;
+  a {
+    color: $primaryColor;
+    cursor: pointer;
+  }
+
+  .upper-section {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    box-shadow: 0px 0px 0px 1px rgba(26, 30, 35, 0.3);
+    padding: 5px 10px 5px 10px;
+
+    .avatar-container {
+      background-size: cover;
+      background-position: center;
+      border-radius: 50%;
+      box-shadow: 0px 0px 0px 1px rgba(26, 30, 35, 0.7);
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-self: center;
+    }
+
+    .main-top {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+      padding-left: 10px;
+      font-size: 15px;
+      font-weight: 500;
+
+      .username {
+        display: flex;
+        align-self: center;
+        text-decoration: none;
+      }
+
+      .username:hover {
+        text-decoration: underline;
+      }
+
+      .menu-button {
+        margin-right: 10px;
+        transform: rotate(90deg);
+        font-size: 20px;
+        display: flex;
+        flex-direction: row;
+        align-self: center;
+      }
+
+      .menu-button:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+
+  .photo-section {
+    height: 70%;
+    width: 100%;
+    box-shadow: 0px 0px 0px 1px rgba(26, 30, 35, 0.3);
+
+    .photo-container {
+      background-size: cover;
+      background-position: center;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .button-section {
+    background-color: $secondaryColor;
+    height: 40px;
+    color: $primaryColor;
+    position: sticky;
+    display: flex;
+    justify-content: space-between;
+    font-size: 24px;
+    padding: 0px 8px;
+    margin-top: 4px;
+
+    .button-section-left-side {
+      display: flex;
+      flex-direction: row;
+      top: 0;
+      width: 100px;
+
+      i {
+        padding: 8px;
+      }
+
+      i:hover {
+        opacity: 0.7;
+      }
+
+      .liked-button {
+        color: rgb(237, 73, 86);
+      }
+    }
+
+    .button-section-right-side {
+      display: flex;
+      flex-direction: row;
+      top: 0;
+      align-items: flex-end;
+      i {
+        padding: 8px;
+      }
+    }
+  }
+
+  .description-area {
+    width: 100%;
+    word-wrap: break-word;
+    padding: 0px 16px;
+    strong{
+      cursor: pointer;
+    }
+    strong:hover{
+      text-decoration: underline;
+    }
+    span {
+      word-break: break-all;
+      text-align: center;
+    }
+  }
+
+  .comment-area {
+    width: 100%;
+    padding: 16px;
+    margin-bottom: -1.34375em;
+
+    button {
+      background: transparent;
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+
+      &:disabled {
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+.mat-button {
+  color: $destructiveColor !important;
+  i {
+    color: $destructiveColor;
+  }
+}
+
+@media (min-width: 750px) {
+  .post-card-section {
+    width: 600px;
+  }
+}
+@media (min-width: 750px) {
+  .avatar-container {
+    width: 37px;
+    height: 37px;
+  }
+}

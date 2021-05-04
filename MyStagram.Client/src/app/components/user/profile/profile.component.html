@@ -1,0 +1,49 @@
+<ng-container infiniteScroll [fromRoot]="true" [infiniteScrollContainer]="'.page'" [infiniteScrollDistance]="1"
+  [infiniteScrollThrottle]="0" (scrolled)="onScroll()">
+  <div class="page">
+    <ng-container>
+      <section class="profile-section">
+        <div class="upper-menu-section">
+          <div class="avatar-container" *ngIf="this.userProfile?.photoUrl" [ngStyle]="{
+          'background-image': 'url('+ this.userProfile?.photoUrl +')'
+        }">
+          </div>
+          <img class="avatar-container" *ngIf="!this.userProfile?.photoUrl" src="../assets/profile/user.png">
+          <div class="profile-details">
+            <div class="upper-section">
+              <h2 class="text-truncate">{{this.userProfile.userName}}</h2>
+              <button *ngIf="this.userProfile.id===this.currentUserId" (click)="goToEditProfile()">Edit Profile</button>
+              <button *ngIf="this.userProfile.id!==this.currentUserId && !this.checkFollower() && !this.checkPrivacy()"
+                (click)="this.followUser()">Follow</button>
+              <button *ngIf="this.userProfile.id!==this.currentUserId && this.checkFollower() && !this.checkPrivacy()"
+                (click)="this.unFollowUser()">Unfollow</button>
+              <button *ngIf="this.userProfile.id!==this.currentUserId && !this.checkFollower() && this.checkPrivacy()"
+                (click)="this.unFollowUser()">Cancel Request</button>
+              <button *ngIf="this.userProfile?.id !== this.currentUserId" [routerLink]="['/messenger/',this.userProfile.id]">
+                <i class="fas fa-envelope"></i></button>
+            </div>
+            <div class="bottom-section">
+              <p>Followers: <strong>{{this.userProfile.followersCount}}</strong></p>
+              <p>Following: <strong>{{this.userProfile.followingCount}}</strong></p>
+            </div>
+          </div>
+        </div>
+        <h1 *ngIf="posts?.length === 0 && !this.userProfile.isPrivate"
+          class="row col d-flex justify-content-center my-5">
+          This account has no posts yet...
+        </h1>
+        <h1
+          *ngIf=" posts?.length === 0 && this.userProfile.isPrivate && !this.checkFollower() && this.userProfile.id !== this.currentUserId"
+          class="row col d-flex justify-content-center my-5"> This account is private</h1>
+        <div class="gallery-section"
+          *ngIf="!this.userProfile.isPrivate || (this.userProfile.isPrivate && this.checkFollower()) || this.userProfile.id === this.currentUserId">
+          <ng-container *ngFor="let post of posts">
+            <div (click)="goToPost(post?.id)" class="photo-container" [ngStyle]="{
+        'background-image': 'url('+ post?.photoUrl +')' }">
+            </div>
+          </ng-container>
+        </div>
+      </section>
+    </ng-container>
+  </div>
+</ng-container>

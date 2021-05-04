@@ -1,0 +1,99 @@
+@import "~src/const.scss";
+
+.comments-wrapper {
+  display: flex;
+  z-index: 3;
+  justify-content: center;
+  align-self: center;
+  position: fixed;
+  width: 100vw;
+  max-height: 700px;
+  top: 15%;
+  pointer-events: none;
+  
+  .comments-section {
+    overflow-y: scroll;
+    position: relative;
+    width: 60%;
+    flex-direction: column;
+    box-shadow: 0px 0px 0px 2px rgba(26, 30, 35, 0.8);
+    background-color: $secondaryColor;
+    max-width: 600px;
+    pointer-events: auto;
+
+    .comment-card {
+      box-shadow: 0px 3px 2px -2px rgba(26, 30, 35, 0.3);
+      padding: 5px 0;
+
+      .top-section {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 5px 0;
+
+        .top-left-side {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+
+          .avatar-container {
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            box-shadow: 0px 0px 0px 1px rgba(26, 30, 35, 0.5);
+            width: 30px;
+            height: 30px;
+            margin-left: 10px;
+          }
+
+          .author-name {
+            padding: 0 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0.9;
+          }
+        }
+
+        .author-button {
+          padding: 0px 15px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          opacity: 0.5;
+          color: $destructiveColor;
+
+          a {
+
+            cursor: pointer;
+            color: $destructiveColor;
+          }
+
+          i:hover{
+            color: red;
+          }
+        }
+      }
+    }
+
+    .comment-content {
+      margin: 0 10px;
+      word-wrap: break-word;
+
+      span {
+        word-break: break-all;
+        text-align: center;
+        margin: 0;
+      }
+    }
+    
+    .created-section {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      padding: 0 10px;
+      font-size: 10px;
+      opacity: 0.7;
+    }
+  }
+}

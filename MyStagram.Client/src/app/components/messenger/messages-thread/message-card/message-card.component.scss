@@ -1,0 +1,58 @@
+@import "~src/const.scss";
+
+.message-card {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+  margin: 5px 10px;
+
+  .message-left {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    .message {
+      max-width: 45%;
+      padding: 10px;
+      background-color: $primaryColor;
+      color: $secondaryColor;
+    }
+
+    .timer {
+      justify-content: flex-start;
+    }
+  }
+
+  .message-right {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    .message {
+      max-width: 45%;
+      padding: 10px;
+      background-color: $secondaryColor;
+      border: $primaryColor solid 1px;
+    }
+
+    .timer {
+      justify-content: flex-end;
+    }
+  }
+
+  .timer {
+    font-size: 12px;
+    display: flex;
+    margin: 0;
+  }
+
+  .message {
+    border-radius: 1em;
+
+    span {
+      word-break: break-all;
+    }
+  }
+}

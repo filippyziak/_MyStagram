@@ -1,0 +1,163 @@
+@import "~@angular/material/theming";
+@import "~angular-notifier/styles";
+@import "~src/const.scss";
+
+@include mat-core();
+
+$MyStagram-SPA-primary: mat-palette($mat-indigo, $primaryColor);
+$MyStagram-SPA-accent: mat-palette($mat-pink, $secondaryColor);
+
+$MyStagram-SPA-warn: mat-palette($mat-custom, destructiveColor);
+
+$MyStagram-SPA-theme: mat-light-theme(
+  (
+    color: (
+      primary: $MyStagram-SPA-primary,
+      accent: $MyStagram-SPA-accent,
+      warn: $MyStagram-SPA-warn,
+    ),
+  )
+);
+
+@include angular-material-theme($MyStagram-SPA-theme);
+
+* {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+html,
+body {
+  min-width: 320px;
+  height: 100%;
+  margin: 0;
+  background-color: $secondaryColor;
+  overflow: hidden;
+}
+
+.text-danger {
+  color: $destructiveColor !important;
+}
+
+.logo {
+  max-width: 200px;
+  max-height: 60px;
+  &:hover {
+    cursor: pointer;
+  }
+  &:focus {
+    outline: none;
+  }
+}
+
+.custom-input {
+  border: solid rgba($color: $primaryColor, $alpha: 0.5) 1px !important;
+}
+
+.custom-p {
+  text-decoration: none;
+  font-size: 18px;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+input {
+  background-color: #eef0f2 !important;
+}
+
+.input-c {
+  background-color: #eef0f2 !important;
+}
+
+.primary-button {
+  &:disabled {
+    opacity: 0.6;
+  }
+}
+
+li {
+  list-style-type: none;
+
+  cursor: pointer;
+}
+
+.customize + * .mat-menu-panel {
+  background-color: $secondaryColor;
+  margin-top: 14px;
+  i {
+    color: $primaryColor;
+  }
+  button {
+    color: $primaryColor;
+  }
+}
+
+.customize-search + * .mat-menu-panel {
+  background-color: $secondaryColor;
+  margin-top: 14px;
+}
+
+.blur {
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(5px);
+}
+
+button {
+  background-color: $primaryColor;
+  border-radius: 10px;
+  border: $primaryColor;
+  color: $secondaryColor;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+
+  &:hover {
+    opacity: 0.7;
+    cursor: pointer;
+  }
+}
+
+.destructive-button{
+  background-color: $destructiveColor !important;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+@media( max-height: 812px)
+{
+  body{
+    overflow-y: auto !important;
+  }
+}

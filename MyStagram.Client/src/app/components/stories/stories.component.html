@@ -1,0 +1,26 @@
+<section class="story-wrapper my-2">
+  
+  <div class="story-watched" (click)="navigateToStory(authService.currentUser.id)">
+    <div class="avatar-container custom-border" *ngIf="authService?.currentUser?.photoUrl" [ngStyle]="{
+      'background-image': 'url('+ authService?.currentUser?.photoUrl +')'
+    }">
+    </div>
+    <img class="avatar-container custom-border" *ngIf="!authService?.currentUser?.photoUrl" src="../assets/profile/user.png">
+  </div>
+  <ng-container *ngFor="let story of storyWrappers">
+    <div class="story" *ngIf="!story?.isWatched" (click)="navigateToStory(story.userId)">
+      <div class="avatar-container" *ngIf="story?.userPhotoUrl" [ngStyle]="{
+        'background-image': 'url('+ story?.userPhotoUrl +')'
+        }">
+      </div>
+      <img class="avatar-container" *ngIf="!story?.userPhotoUrl" src="../assets/profile/user.png">
+    </div>
+    <div class="story-watched" *ngIf="story?.isWatched" (click)="navigateToStory(story.userId)">
+      <div class="avatar-container" *ngIf="story?.userPhotoUrl" [ngStyle]="{
+        'background-image': 'url('+ story?.userPhotoUrl +')'
+        }">
+      </div>
+      <img class="avatar-container" *ngIf="!story?.userPhotoUrl" src="../assets/profile/user.png">
+    </div>
+  </ng-container>
+</section>

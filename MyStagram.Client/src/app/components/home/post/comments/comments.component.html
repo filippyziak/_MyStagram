@@ -1,0 +1,32 @@
+<section class="comments-wrapper">
+  <section class="comments-section" *ngIf="comments?.length > 0">
+    <ng-container *ngFor="let comment of comments">
+      <section class="comment-card">
+        <section class="top-section">
+          <div class="top-left-side">
+            <div class="avatar-container" *ngIf="this.comment?.avatarUrl" [ngStyle]="{
+              'background-image': 'url('+ this.comment?.avatarUrl +')'
+            }">
+            </div>
+            <img class="avatar-container" *ngIf="!this.comment?.avatarUrl" src="../assets/profile/user.png">
+            <strong (click)="goToUserProfile(this.comment.userId)" class="author-name">{{this.comment?.userName}}</strong>
+          </div>
+          <div class="author-button" *ngIf="authService.currentUser?.id === comment?.userId">
+            <a (click)="deleteComment(this.comment?.id)"><i class="fas fa-trash"></i></a>
+          </div>
+        </section>
+        <section class="comment-content">
+          <span>{{comment.content}}</span>
+          <section class="created-section">
+            <p>Created: <span>{{comment?.created | date}}</span></p>
+          </section>
+        </section>
+      </section>
+    </ng-container>
+  </section>
+  <section *ngIf="comments?.length == 0">
+    <p>There are no comments here :(</p>
+  </section>
+</section>
+
+

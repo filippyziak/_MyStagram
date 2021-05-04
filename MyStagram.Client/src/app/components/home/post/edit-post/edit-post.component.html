@@ -1,0 +1,47 @@
+<div class="container">
+
+  <section class="post-section my-md-5 py-md-5 row col-md-12 justify-content-center">
+    <h1 class="text-center">{{ editMode ? 'Post editing' : 'Post creating'}}</h1>
+    <div class="photo-container" *ngIf="tempPhotoUrl && !editMode">
+      <img class="photo-container" [src]="tempPhotoUrl">
+    </div>
+    <div class="photo-container" *ngIf="editMode">
+      <img class="photo-container" [src]="post?.photoUrl">
+    </div>
+    <form class="col-md-6 offset-md-3" [formGroup]="postForm">
+      <fieldset class="description-area col-md-6">
+        <textarea type="text" class="custom-input form-control input-c my-2" placeholder="description"
+          style="overflow:hidden" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2"
+          cdkAutosizeMaxRows="15" formControlName="description" required
+          maxlength="{{constants.maximumDescriptionLength}}"></textarea>
+      </fieldset>
+
+
+      <section class="bottom-buttons col-md-6 justify-content-around" *ngIf="!editMode; else editButtons">
+        <div class=" d-flex justify-content-around">
+          <button class="col-md-4 " (click)="fileInput.click()">
+            Pick
+            <input #fileInput type="file" (change)="loadPhoto(fileInput.files[0])"
+              accept=".img,.png,.jpg,.jpeg,.tiff,.ico,.svg" style="display: none;" />
+          </button>
+          <button class="reset-photo-container col-md-4 destructive-button" (click)="resetPhoto()" (click)="fileInput.value=''">
+            Reset
+          </button>
+        </div>
+        <p class="text-center">Selected photo: <strong>{{ photoUrl ? photoUrl : '-' }}</strong></p>
+        <button class="primary-button col-md-12" (click)="createOrUpdatePost()"
+          [disabled]="postForm.invalid || !photoUrl">Create
+          post</button>
+      </section>
+
+      <ng-template #editButtons>
+        <section class="bottom-buttons justify-content-around">
+          <button class="primary-button col--md-3" (click)="createOrUpdatePost()"
+            [disabled]="postForm.invalid || postForm.pristine || !photoUrl">Save</button>
+          <button class="destructive-button col-md-3"
+            [routerLink]="['/profile/', this.authService.currentUser?.id]">Cancel</button>
+        </section>
+      </ng-template>
+    </form>
+  </section>
+</div>
