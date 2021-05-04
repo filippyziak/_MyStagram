@@ -9,7 +9,7 @@ MyStagram is social application similar to Instagram. Application has many featu
 
 **Frameworks and libraries:** EF Core, SignalR, MediatR, AutoMapper, NLog, SendGrid
 
-##Pictures
+## Pictures
 
 **Database schema:**
 
