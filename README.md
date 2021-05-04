@@ -2,7 +2,7 @@
 ## About
 MyStagram is social application similar to Instagram. Application has many features like: authentication, authorization, posting with pictures, likes, comments, follows, stories, messenger, notifications, profile managment, users browser.
 
-##Specifications
+## Specifications
 **Technology:** ASP NET CORE 3.1 Web API, Angular 10
 
 **Database:** PostgreSQL, MongoDB
