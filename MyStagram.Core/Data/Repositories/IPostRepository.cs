@@ -4,12 +4,11 @@ using MyStagram.Core.Logic.Requests.Query.Main;
 using MyStagram.Core.Models.Domain.Main;
 using MyStagram.Core.Models.Helpers.Pagination;
 
-namespace MyStagram.Core.Services.Interfaces.ReadOnly
+namespace MyStagram.Core.Data.Repositories
 {
-    public interface IReadOnlyMainService
+    public interface IPostRepository : IRepository<Post>
     {
-        Task<Post> GetPost(string postId);
         Task<IPagedList<Post>> GetPosts(GetPostsRequest request);
-        Task<PagedList<Post>> FetchPosts(FetchPostsRequest request);
+        
     }
 }

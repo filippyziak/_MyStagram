@@ -94,7 +94,7 @@ namespace MyStagram.Infrastructure.Logging
                 default: break;
             }
 
-            return PagedList<LogDocument>.Create(logs.AsQueryable(), paginationRequest.PageNumber, paginationRequest.PageSize);
+            return PagedList<LogDocument>.Create(logs, paginationRequest.PageNumber, paginationRequest.PageSize);
         }
 
         private IEnumerable<string> LoadLogsFromFile(string logsFilePath)

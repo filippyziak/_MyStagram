@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using MyStagram.Core.Models.Helpers.Result;
 using MyStagram.Core.Data;
 using MyStagram.Core.Services.Interfaces.ReadOnly;
+using MyStagram.Core.Data.Models;
 
 namespace MyStagram.Core.Services
 {
@@ -42,13 +43,8 @@ namespace MyStagram.Core.Services
         public async Task<Post> GetPost(string postId)
         => await database.PostRepository.Get(postId) ?? throw new EntityNotFoundException("Post doesn't exists");
 
-        public async Task<PagedList<Post>> GetPosts(GetPostsRequest request)
-        {
-            IEnumerable<Post> posts;
-            posts = (await database.PostRepository.GetWhere(p => p.UserId == request.UserId)).OrderByDescending(p => p.Created);
-
-            return posts.ToPagedList<Post>(request.PageNumber, request.PageSize);
-        }
+        public async Task<IPagedList<Post>> GetPosts(GetPostsRequest request)
+        => await database.PostRepository.GetPosts(request);
 
         public async Task<Post> CreatePost(Post post, IFormFile photo)
         {
@@ -83,7 +79,7 @@ namespace MyStagram.Core.Services
                 posts.AddRange(follower.Recipient.Posts);
             }
 
-            return posts.OrderByDescending(p => p.Created).ToPagedList<Post>(request.PageNumber, request.PageSize);
+            return PagedList<Post>.Create(posts.OrderByDescending(p => p.Created), request.PageNumber, request.PageSize);
         }
 
         public async Task<Post> UpdatePost(Post post)

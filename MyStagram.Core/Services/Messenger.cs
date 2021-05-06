@@ -11,6 +11,7 @@ using MyStagram.Core.Models.Helpers.Messenger;
 using MyStagram.Core.Builders;
 using MyStagram.Core.Data;
 using MyStagram.Core.Services.Interfaces.ReadOnly;
+using MyStagram.Core.Data.Models;
 
 namespace MyStagram.Core.Services
 {
@@ -56,22 +57,19 @@ namespace MyStagram.Core.Services
             }
         }
 
-        public async Task<PagedList<Message>> GetMessagesThread(GetMessagesThreadRequest request)
+        public async Task<IPagedList<Message>> GetMessagesThread(GetMessagesThreadRequest request)
         {
+
             var sender = await this.profileService.GetCurrentUser();
 
             if (sender.Id == request.RecipientId)
                 throw new EntityNotFoundException("Messages thread not found");
 
-            var messages = sender.MessagesSent.Concat(sender.MessagesReceived)
-            .Where(m => (m.SenderId == sender.Id && m.RecipientId == request.RecipientId)
-            || (m.SenderId == request.RecipientId && m.RecipientId == sender.Id))
-            .OrderByDescending(m => m.DateCreated)
-            .ToList();
+            var messages = await database.MessageRepository.GetMessages(request, sender.Id);
 
             messages = await MarkAsRead(sender.Id, request.RecipientId, messages);
 
-            return messages.ToPagedList<Message>(request.PageNumber, request.PageSize);
+            return messages;
 
         }
 
@@ -116,7 +114,7 @@ namespace MyStagram.Core.Services
                    uniqueConversations.Add(c);
            });
 
-            return uniqueConversations.ToPagedList<Conversation>(request.PageNumber, request.PageSize);
+            return PagedList<Conversation>.Create(uniqueConversations, request.PageNumber, request.PageSize);
         }
 
         public async Task<int> CountUnreadConversations()
@@ -150,7 +148,7 @@ namespace MyStagram.Core.Services
             return message;
         }
 
-        private async Task<List<Message>> MarkAsRead(string currentUserId, string recipientId, List<Message> userMessages)
+        private async Task<IPagedList<Message>> MarkAsRead(string currentUserId, string recipientId, IPagedList<Message> userMessages)
         {
             if ((userMessages.FirstOrDefault())?.RecipientId != currentUserId)
                 return userMessages;

@@ -12,6 +12,7 @@ using MyStagram.Core.Models.Helpers.Pagination;
 using MyStagram.Core.Logic.Requests.Query.Profile;
 using Microsoft.EntityFrameworkCore;
 using MyStagram.Core.Data;
+using MyStagram.Core.Data.Models;
 
 namespace MyStagram.Core.Services.Interfaces
 {
@@ -39,17 +40,8 @@ namespace MyStagram.Core.Services.Interfaces
         public async Task<User> GetUser(string userId)
         => await userManager.FindByIdAsync(userId) ?? throw new EntityNotFoundException("Account does not exist", ErrorCodes.EntityNotFound);
 
-        public async Task<PagedList<User>> GetProfiles(GetProfilesRequest request)
-        => string.IsNullOrEmpty(request.UserName)
-        ? ((await database.UserRepository.GetAll())
-        .OrderByDescending(u => u.Created)
-        )
-        .ToPagedList<User>(request.PageNumber, request.PageSize)
-        : ((await database.UserRepository.GetAll())
-        .OrderByDescending(u => u.Created))
-        .Where(u => u.UserName.ToLower().Contains(request.UserName.ToLower()))
-        .OrderByDescending(u => u.Created)
-        .ToPagedList<User>(request.PageNumber, request.PageSize);
+        public async Task<IPagedList<User>> GetProfiles(GetProfilesRequest request)
+        => await database.UserRepository.GetProfiles(request);
         public async Task<UpdateProfileResult> UpdateProfile(string newUserName, string newName, string newSurname, string newDescription, string newEmail, bool privacy)
         {
             var user = await GetCurrentUser();

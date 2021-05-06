@@ -10,15 +10,15 @@ namespace MyStagram.Core.Data
 {
     public interface IDatabase : IDisposable
     {
-        IRepository<User> UserRepository { get; }
+        IUserRepository UserRepository { get; }
         IRepository<Role> RoleRepository { get; }
         IRepository<UserRole> UserRoleRepository { get; }
-        IRepository<Post> PostRepository { get; }
+        IPostRepository PostRepository { get; }
         IRepository<Comment> CommentRepository { get; }
         IRepository<Like> LikeRepository { get; }
-        IRepository<Follower> FollowerRepository { get; }
+        IFollowerRepository FollowerRepository { get; }
         IRepository<Connection> ConnectionRepository { get; }
-        IRepository<Message> MessageRepository { get; }
+        IMessageRepository MessageRepository { get; }
         IRepository<Story> StoryRepository { get; }
         IRepository<UserStory> UserStoryRepository { get; }
         IFileRepository FileRepository { get; }

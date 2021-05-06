@@ -12,6 +12,7 @@ using MyStagram.Core.Models.Helpers.Result;
 using System.Linq;
 using MyStagram.Core.Data;
 using MyStagram.Core.Services.Interfaces.ReadOnly;
+using MyStagram.Core.Data.Models;
 
 namespace MyStagram.Core.Services
 {
@@ -115,38 +116,13 @@ namespace MyStagram.Core.Services
 
         public async Task<GetFollowersResult> GetFollowers(GetFollowersRequest request)
         {
-            PagedList<Follower> followers;
-
-            if (request.AreAccepted)
-            {
-                followers = string.IsNullOrEmpty(request.UserName)
-              ? ((await database.FollowerRepository.GetWhere(f => (f.RecipientId == request.UserId && f.RecipientAccepted)))
-                    .OrderByDescending(f => f.Created))
-                    .ToPagedList<Follower>(request.PageNumber, request.PageSize)
-              : ((await database.FollowerRepository.GetWhere(f => (f.RecipientId == request.UserId && f.RecipientAccepted))))
-                  .Where(f => f.Recipient.UserName.ToLower().Contains(request.UserName.ToLower()))
-                  .OrderByDescending(f => f.Created)
-                  .ToPagedList<Follower>(request.PageNumber, request.PageSize);
-            }
-            else
-            {
-                followers = ((await database.FollowerRepository.GetWhere(f => (f.RecipientId == request.UserId)))
-                    .OrderByDescending(f => f.Created))
-                   .ToPagedList<Follower>(request.PageNumber, request.PageSize);
-            }
-
-            var following = string.IsNullOrEmpty(request.UserName)
-            ? ((await database.FollowerRepository.GetWhere(f => (f.SenderId == request.UserId)))
-                .OrderByDescending(f => f.Created))
-                .ToPagedList<Follower>(request.PageNumber, request.PageSize)
-            : ((await database.FollowerRepository.GetWhere(f => (f.SenderId == request.UserId)))
-                .OrderByDescending(f => f.Created))
-                .Where(f => f.Sender.UserName.ToLower().Contains(request.UserName.ToLower()))
-                .ToPagedList<Follower>(request.PageNumber, request.PageSize);
+            var result = await database.FollowerRepository.GetFollowers(request);
 
             var sender = await profileService.GetCurrentUser();
-            followers = await MarkAsWatched(sender.Id, request.UserId, followers);
-            return new GetFollowersResult(followers, following);
+
+            result.Followers = await MarkAsWatched(sender.Id, request.UserId, result.Followers);
+
+            return result;
         }
 
         public async Task<PagedList<Follower>> GetFollowing(GetFollowersRequest request)
@@ -154,7 +130,7 @@ namespace MyStagram.Core.Services
             IEnumerable<Follower> followers;
             followers = await database.FollowerRepository.GetWhere(f => f.RecipientId == request.UserId);
 
-            return followers.ToPagedList<Follower>(request.PageNumber, request.PageSize);
+            return PagedList<Follower>.Create(followers, request.PageNumber, request.PageSize);
         }
 
         public async Task<Follower> GetFollower(string senderId, string recipientId)
@@ -174,7 +150,7 @@ namespace MyStagram.Core.Services
             database.FollowerRepository.Update(follower);
             return await database.Complete();
         }
-        private async Task<PagedList<Follower>> MarkAsWatched(string currentUserId, string recipientId, PagedList<Follower> userFollowers)
+        private async Task<IPagedList<Follower>> MarkAsWatched(string currentUserId, string recipientId, IPagedList<Follower> userFollowers)
         {
             if ((userFollowers.FirstOrDefault())?.RecipientId != currentUserId)
                 return userFollowers;

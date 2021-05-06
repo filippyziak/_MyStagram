@@ -18,8 +18,8 @@ namespace MyStagram.Infrastructure.Database
 
         }
         #region repos
-        private IRepository<User> userRepository;
-        public IRepository<User> UserRepository => userRepository ?? new Repository<User>(context);
+        private IUserRepository userRepository;
+        public IUserRepository UserRepository => userRepository ?? new UserRepository(context);
 
         private IRepository<Role> roleRepository;
         public IRepository<Role> RoleRepository => roleRepository ?? new Repository<Role>(context);
@@ -27,8 +27,8 @@ namespace MyStagram.Infrastructure.Database
         private IRepository<UserRole> userRoleRepository;
         public IRepository<UserRole> UserRoleRepository => userRoleRepository ?? new Repository<UserRole>(context);
 
-        private IRepository<Post> postRepository;
-        public IRepository<Post> PostRepository => postRepository ?? new Repository<Post>(context);
+        private IPostRepository postRepository;
+        public IPostRepository PostRepository => postRepository ?? new PostRepository(context);
 
         private IRepository<Comment> commentRepository;
         public IRepository<Comment> CommentRepository => commentRepository ?? new Repository<Comment>(context);
@@ -36,11 +36,11 @@ namespace MyStagram.Infrastructure.Database
         private IRepository<Like> likeRepository;
         public IRepository<Like> LikeRepository => likeRepository ?? new Repository<Like>(context);
 
-        private IRepository<Follower> followerRepository;
-        public IRepository<Follower> FollowerRepository => followerRepository ?? new Repository<Follower>(context);
+        private IFollowerRepository followerRepository;
+        public IFollowerRepository FollowerRepository => followerRepository ?? new FollowerRepository(context);
 
-        private IRepository<Message> messageRepository;
-        public IRepository<Message> MessageRepository => messageRepository ?? new Repository<Message>(context);
+        private IMessageRepository messageRepository;
+        public IMessageRepository MessageRepository => messageRepository ?? new MessageRepository(context);
 
         private IRepository<Connection> connectionRepository;
         public IRepository<Connection> ConnectionRepository => connectionRepository ?? new Repository<Connection>(context);
