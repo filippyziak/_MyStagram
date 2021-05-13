@@ -135,36 +135,36 @@ namespace MyStagram.API
 
             services.AddSingleton<IEmailSender, EmailSender>();
             services.AddSingleton<ICryptoService, CryptoService>();
-            services.AddSingleton<IFilesService, FilesService>();
+            services.AddSingleton<IFilesManager, FilesService>();
             services.AddSingleton<IReadOnlyFilesService, FilesService>();
             services.AddSingleton<INLogger, NLogger>();
 
-            services.AddTransient<IDatabase, Database>();
-            services.AddTransient<ILogManager, LogManager>();
-            services.AddTransient<IDatabaseManager, DatabaseManager>();
+            services.AddScoped<IDatabase, Database>();
+            services.AddScoped<ILogManager, LogManager>();
+            services.AddScoped<IDatabaseManager, DatabaseManager>();
 
-            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
-            services.AddTransient(typeof(IMongoRepository<>), typeof(MongoRepository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
 
-            services.AddTransient<IConnectionManager, ConnectionManager>();
-            services.AddTransient<IHubManager, HubManager>();
+            services.AddScoped<IConnectionManager, ConnectionManager>();
+            services.AddScoped<IHubManager, HubManager>();
 
-            services.AddTransient<IAdminService, AdminService>();
-            services.AddTransient<IReadOnlyLogManager, LogManager>();
-            services.AddTransient<IAuthService, AuthService>();
-            services.AddTransient<IReadOnlyAuthService, AuthService>();
-            services.AddTransient<IRolesService, RolesService>();
-            services.AddTransient<IReadOnlyRolesService, RolesService>();
-            services.AddTransient<IMainService, MainService>();
-            services.AddTransient<IReadOnlyMainService, MainService>();
-            services.AddTransient<IProfileService, ProfileService>();
-            services.AddTransient<IReadOnlyProfileService, ProfileService>();
-            services.AddTransient<IFollowersService, FollowersService>();
-            services.AddTransient<IReadOnlyFollowersService, FollowersService>();
-            services.AddTransient<IMessenger, Messenger>();
-            services.AddTransient<IReadOnlyMessenger, Messenger>();
-            services.AddTransient<IStoryService, StoryService>();
-            services.AddTransient<IReadOnlyStoryService, StoryService>();
+            services.AddScoped<IAdminService, AdminService>();
+            services.AddScoped<IReadOnlyLogManager, LogManager>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IReadOnlyAuthService, AuthService>();
+            services.AddScoped<IRolesService, RolesService>();
+            services.AddScoped<IReadOnlyRolesService, RolesService>();
+            services.AddScoped<IMainService, MainService>();
+            services.AddScoped<IReadOnlyMainService, MainService>();
+            services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<IReadOnlyProfileService, ProfileService>();
+            services.AddScoped<IFollowersService, FollowersService>();
+            services.AddScoped<IReadOnlyFollowersService, FollowersService>();
+            services.AddScoped<IMessenger, Messenger>();
+            services.AddScoped<IReadOnlyMessenger, Messenger>();
+            services.AddScoped<IStoryService, StoryService>();
+            services.AddScoped<IReadOnlyStoryService, StoryService>();
 
             #endregion
 
@@ -230,6 +230,8 @@ namespace MyStagram.API
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            StorageLocation.Init(Configuration.GetValue<string>(AppSettingsKeys.ServerAddress));
         }
     }
 }

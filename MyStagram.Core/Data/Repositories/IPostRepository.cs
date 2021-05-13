@@ -9,6 +9,5 @@ namespace MyStagram.Core.Data.Repositories
     public interface IPostRepository : IRepository<Post>
     {
         Task<IPagedList<Post>> GetPosts(GetPostsRequest request);
-        
     }
 }

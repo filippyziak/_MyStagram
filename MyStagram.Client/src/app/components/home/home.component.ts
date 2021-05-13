@@ -58,7 +58,6 @@ export class HomeComponent implements OnInit {
     this.route.data.subscribe(data => {
       if (this.authService.isLoggedIn()) {
         this.pagination = data.postsResponse?.pagination;
-        console.log(this.pagination);
         this.posts = data.postsResponse?.result?.posts;
         this.storyWrappers = data.storiesResponse?.storyWrappers;
       }

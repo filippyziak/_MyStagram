@@ -19,9 +19,9 @@ namespace MyStagram.Infrastructure.Logging
     public class LogManager : ILogManager
     {
         private readonly IMongoRepository<LogDocument> logsMongoRepository;
-        private readonly IFilesService filesService;
+        private readonly IFilesManager filesService;
 
-        public LogManager(IMongoRepository<LogDocument> logsMongoRepository, IFilesService filesService)
+        public LogManager(IMongoRepository<LogDocument> logsMongoRepository, IFilesManager filesService)
         {
             this.logsMongoRepository = logsMongoRepository;
             this.filesService = filesService;

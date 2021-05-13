@@ -14,7 +14,6 @@ namespace MyStagram.Infrastructure.Database.Repositories
         {
         }
 
-
         public async Task<IPagedList<Post>> GetPosts(GetPostsRequest request)
         => await context.Posts.Where(p => p.UserId == request.UserId).OrderByDescending(p => p.Created).ToPagedList(request.PageNumber, request.PageSize);
 

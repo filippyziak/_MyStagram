@@ -22,9 +22,9 @@ namespace MyStagram.Core.Services.Interfaces
         private readonly UserManager<User> userManager;
         private readonly string currentUserId;
         private readonly IDatabase database;
-        private readonly IFilesService filesService;
+        private readonly IFilesManager filesService;
         public ProfileService(UserManager<User> userManager, IHttpContextAccessor httpContextAccessor, IDatabase database,
-                            IFilesService filesService)
+                            IFilesManager filesService)
         {
             this.database = database;
             this.userManager = userManager;
@@ -65,10 +65,10 @@ namespace MyStagram.Core.Services.Interfaces
             var user = await GetCurrentUser();
 
             string currentPath = $"files/avatars/{user.Id}";
-            filesService.DeleteDirecetory(currentPath);
+            filesService.DeleteDirectory(currentPath);
             await database.FileRepository.DeleteFileByPath(currentPath);
 
-            var uploadAvatar = await filesService.UploadFile(photo, $"avatars/{user.Id}", Path.GetExtension(photo.FileName));
+            var uploadAvatar = await filesService.Upload(photo, $"avatars/{user.Id}");
 
             user.SetAvatar(uploadAvatar.FileUrl);
             database.FileRepository.AddFile(uploadAvatar.FileUrl, uploadAvatar.FilePath);
@@ -86,7 +86,7 @@ namespace MyStagram.Core.Services.Interfaces
                 return false;
 
             string path = $"files/avatars/{user.Id}";
-            filesService.DeleteDirecetory(path);
+            filesService.DeleteDirectory(path);
             await database.FileRepository.DeleteFileByPath(path);
 
             user.SetAvatar(null);

@@ -10,7 +10,7 @@ namespace MyStagram.Infrastructure.Database.Repositories
 
         public void AddFile(string url, string path)
         {
-            var fileToAdd = Core.Models.Domain.File.File.Create(path, url);
+            var fileToAdd = Core.Models.Domain.File.File.Create(path);
             Add(fileToAdd);
         }
 

@@ -23,12 +23,12 @@ namespace MyStagram.Core.Services
     public class MainService : IMainService
     {
         private readonly UserManager<User> userManager;
-        private readonly IFilesService filesService;
+        private readonly IFilesManager filesService;
         private readonly IDatabase database;
         private readonly string userId;
         private readonly IReadOnlyProfileService profileService;
 
-        public MainService(UserManager<User> userManager, IFilesService filesService, IDatabase database,
+        public MainService(UserManager<User> userManager, IFilesManager filesService, IDatabase database,
         IHttpContextAccessor httpContextAccessor, IReadOnlyProfileService profileService)
         {
             this.filesService = filesService;
@@ -57,7 +57,7 @@ namespace MyStagram.Core.Services
 
             if (photo != null)
             {
-                var uploaded = await filesService.UploadFile(photo, $"posts/{post.Id}", Path.GetExtension(photo.FileName));
+                var uploaded = await filesService.Upload(photo, $"posts/{post.Id}");
 
                 post.SetPhoto(uploaded?.FileUrl);
                 database.FileRepository.AddFile(uploaded?.FileUrl, uploaded?.FilePath);
@@ -110,7 +110,7 @@ namespace MyStagram.Core.Services
             if (post.PhotoUrl != null)
             {
                 string filesPath = $"files/posts/{post.Id}";
-                filesService.DeleteDirecetory(filesPath);
+                filesService.DeleteDirectory(filesPath);
                 await database.FileRepository.DeleteFileByPath(filesPath);
 
                 await database.Complete();

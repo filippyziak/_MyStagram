@@ -22,15 +22,15 @@ namespace MyStagram.Core.Services
     {
         private readonly IDatabase database;
         private readonly IReadOnlyProfileService profileService;
-        private readonly IFilesService filesService;
+        private readonly IFilesManager filesManager;
         private readonly IMapper mapper;
 
-        public StoryService(IDatabase database, IReadOnlyProfileService profileService, IFilesService filesService,
+        public StoryService(IDatabase database, IReadOnlyProfileService profileService, IFilesManager filesManager,
                             IMapper mapper)
         {
             this.database = database;
             this.profileService = profileService;
-            this.filesService = filesService;
+            this.filesManager = filesManager;
             this.mapper = mapper;
         }
 
@@ -45,7 +45,7 @@ namespace MyStagram.Core.Services
             if (!await database.Complete())
                 return null;
 
-            var uploadedPhoto = await filesService.UploadFile(photo, $"stories/{story.Id}", Path.GetExtension(photo.FileName));
+            var uploadedPhoto = await filesManager.Upload(photo, $"stories/{story.Id}");
             story.SetStoryUrl(uploadedPhoto.FileUrl);
             database.FileRepository.AddFile(uploadedPhoto.FileUrl, uploadedPhoto.FilePath);
 
@@ -60,7 +60,7 @@ namespace MyStagram.Core.Services
             database.StoryRepository.Delete(story);
 
             string path = $"files/stories/{story.Id}";
-            filesService.DeleteDirecetory(path);
+            filesManager.DeleteDirectory(path);
             await database.FileRepository.DeleteFileByPath(path);
 
             return await database.Complete();
@@ -91,7 +91,7 @@ namespace MyStagram.Core.Services
             foreach (var story in storiesToDelete)
             {
                 string path = $"files/stories/{story.Id}";
-                filesService.DeleteDirecetory(path);
+                filesManager.DeleteDirectory(path);
                 await database.FileRepository.DeleteFileByPath(path);
             }
 
